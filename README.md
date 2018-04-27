@@ -23,7 +23,7 @@ Core Text是和Core Graphics配合使用的，一般是在UIView的drawRect方�
 
 [字形和字符](http://devma.cn/blog/2016/04/14/ios-coretextru-men-zhi-zi-xing/)，一些Metrics专业知识还可以参考Free Type的文档 [Glyph metrics](https://www.freetype.org/freetype2/docs/glyphs/glyphs-3.html)，其实iOS就是使用[Free Type](https://www.freetype.org)库来进行字体渲染的。苹果文档 [Querying Font Metrics](https://developer.apple.com/library/mac/documentation/TextFonts/Conceptual/CocoaTextArchitecture/FontHandling/FontHandling.html#//apple_ref/doc/uid/TP40009459-CH5-SW18) ，[Text Layout](https://developer.apple.com/library/mac/documentation/TextFonts/Conceptual/CocoaTextArchitecture/TypoFeatures/TextSystemFeatures.html#//apple_ref/doc/uid/TP40009459-CH6-51627-BBCCHIFF)。
 
-###CoreText对象模型
+### CoreText对象模型
 
 ![65cc0af7gw1e2uxd1gmhwj.jpg](http://upload-images.jianshu.io/upload_images/1311714-6951400f1c0bf5b7.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -58,7 +58,7 @@ typedef struct
 
 callbacks是一个结构体，主要包含了返回当前CTRun的ascent，descent和width函数。
 
-###代码
+### 代码
 自定义一个继承自UIView的子类CoreTextView;在.m文件里引入头文件CoreText/CoreText.h重写drawRect方法：
 ```
 void RunDelegateDeallocCallback( void* refCon ){
@@ -172,7 +172,7 @@ CGFloat RunDelegateGetWidthCallback(void *refCon){
 
 ![10.22.23.png](http://upload-images.jianshu.io/upload_images/1311714-47c4264fb0dfb19f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-###异步绘制
+### 异步绘制
 上面的drawRect方法是在主线程里调用的，如果绘制的过程比较耗时，可能会阻塞主线程，这时候可以将会值得过程发到子线程里进行，绘制完成后将context转成位图，然后再把位图在主线程里设置到view的layer里。
 ```
 - (void)drawRect:(CGRect)rect{
@@ -271,17 +271,5 @@ CGFloat RunDelegateGetWidthCallback(void *refCon){
     });
 }
 ```
-
-
-##NSAttributedString
-看yykit的demo里，微博的页面的富文本使用了NSAttributedString，这里记录下学习笔记。
-这里要把"我家这个好忠犬啊～[喵喵] http://t.cn/Ry4UXdF //@我是呆毛芳子蜀黍w:这是什么鬼？[喵喵] //@清新可口喵酱圆脸星人是扭蛋狂魔:窝家这个超委婉的拒绝了窝"在手机上显示成;
-
-![Uploading 屏幕快照 2017-08-17 上午11.11.20_514440.png . . .]
-
-@用户名用到了正则匹配，可以得到一个nsrange的数组，是@用户名的nsrange；
-表情也是用到了正则匹配，得到每个表情的nsrange，从本地寻找表情对应的图片，然后用到了NSTextAttachment来生成NSAttributedString，然后把表情进行了替换。
-http://t.cn/Ry4UXdF这个链接被替换成了图片和文字，图片是从网络上下载的。可以先判断本地是否有图片的缓存，如果没有，先用占位图生成NSTextAttachment，先显示占位图，等图片下载完以后就重新替换掉图片。
-[demo]()
 
 
