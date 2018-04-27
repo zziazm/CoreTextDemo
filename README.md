@@ -1,7 +1,7 @@
 # CoreText
 ---
 Core Text是和Core Graphics配合使用的，一般是在UIView的drawRect方法中的Graphics Context上进行绘制的。Core Text真正负责绘制的是文本部分，如果要绘制图片，可以使用CoreText给图片预留出位置，然后用Core Graphics绘制。[demo地址](https://github.com/zziazm/CoreTextDemo)
-##字形度量
+## 字形度量
 字形度量就是字形的各个参数：
 
 ![ios_coretext_glyphs_1.jpg](http://upload-images.jianshu.io/upload_images/1311714-3e605a01dd9815d1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
